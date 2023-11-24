@@ -1,7 +1,9 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Req, Res } from '@nestjs/common';
 import ArticlesService from './services/articles.service';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import { CreateArticleDto } from './dto/create-article.dto';
+import { FastifyReply } from 'fastify';
+
 
 @Controller('articles')
 export default class ArticlesController {
@@ -9,15 +11,21 @@ export default class ArticlesController {
         private readonly articlesService: ArticlesService
     ) { }
 
-    @Get()
-    getAllArticles() {
-        return this.articlesService.getAllArticles();
+    @Get(':id')
+    async getAllArticles(@Req() request: Request, @Res() response: FastifyReply, @Param('id') id: string) {
+        try {
+            const post = await this.articlesService.getArticleById(Number(id));
+            response.send(post);
+        } catch (error) {
+            response.send(error);
+        }
     }
 
     @Get(':id')
     getArticleById(@Param('id') id: string) {
         return this.articlesService.getArticleById(Number(id));
     }
+
 
     @Post()
     async createArticle(@Body() post: CreateArticleDto) {

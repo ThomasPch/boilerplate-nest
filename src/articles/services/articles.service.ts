@@ -1,48 +1,52 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { Article } from '../interfaces/article.interface';
+import Article from '../article.entity';
 import { UpdateArticleDto } from '../dto/update-article.dto';
 import { CreateArticleDto } from '../dto/create-article.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository, In } from 'typeorm';
+
 
 @Injectable()
 export default class ArticlesService {
+
+    constructor (
+        @InjectRepository(Article)
+        private articlesRepository: Repository<Article>
+    ) { }
+
     private lastArticleId = 0;
     private articles: Article[] = [];
 
     getAllArticles() {
-        return this.articles;
+        return this.articlesRepository.find();
     }
 
-    getArticleById(id: number) {
-        const article = this.articles.find(article => article.id === id);
+    async getArticleById(id: number) {
+        const article = this.articlesRepository.findOne({ where: { id: id } });
         if (article) {
             return article;
         }
         throw new HttpException('Article not found', HttpStatus.NOT_FOUND);
     }
 
-    replaceArticle(id: number, article: UpdateArticleDto) {
-        const articleIndex = this.articles.findIndex(article => article.id === id);
-        if (articleIndex > -1) {
-            this.articles[articleIndex] = article;
-            return article;
+    async updateArticle(id: number, article: UpdateArticleDto) {
+        await this.articlesRepository.update(id, article);
+        const updatedArticle = await this.articlesRepository.findOne({ where: { id: id } });
+        if (updatedArticle) {
+            return updatedArticle
         }
         throw new HttpException('Article not found', HttpStatus.NOT_FOUND);
     }
 
-    createArticle(article: CreateArticleDto) {
-        const newArticle = {
-            id: ++this.lastArticleId,
-            ...article
-        }
-        this.articles.push(newArticle);
+    async createArticle(article: CreateArticleDto) {
+        const newArticle = await this.articlesRepository.create(article);
+        await this.articlesRepository.save(newArticle);
         return newArticle;
     }
 
-    deleteArticle(id: number) {
-        const articleIndex = this.articles.findIndex(article => article.id === id);
-        if (articleIndex > -1) {
-            this.articles.splice(articleIndex, 1);
-        } else {
+    async deleteArticle(id: number) {
+        const deleteResponse = await this.articlesRepository.delete(id);
+        if (!deleteResponse.affected) {
             throw new HttpException('Article not found', HttpStatus.NOT_FOUND);
         }
     }
