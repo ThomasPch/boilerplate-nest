@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post, Put, Req, Res } from '@nest
 import ArticlesService from './services/articles.service';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import { CreateArticleDto } from './dto/create-article.dto';
-import { FastifyReply } from 'fastify';
+import { FastifyRequest, FastifyReply } from 'fastify';
 
 
 @Controller('articles')
@@ -12,7 +12,7 @@ export default class ArticlesController {
     ) { }
 
     @Get(':id')
-    async getAllArticles(@Req() request: Request, @Res() response: FastifyReply, @Param('id') id: string) {
+    async getArticleById(@Req() request: FastifyRequest, @Res() response: FastifyReply, @Param('id') id: string) {
         try {
             const post = await this.articlesService.getArticleById(Number(id));
             response.send(post);
@@ -20,12 +20,6 @@ export default class ArticlesController {
             response.send(error);
         }
     }
-
-    @Get(':id')
-    getArticleById(@Param('id') id: string) {
-        return this.articlesService.getArticleById(Number(id));
-    }
-
 
     @Post()
     async createArticle(@Body() post: CreateArticleDto) {

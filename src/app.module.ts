@@ -3,10 +3,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { ArticlesModule } from './articles/articles.module';
+import { DatabaseModule } from './database/database.module';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [ArticlesModule, ConfigModule.forRoot()],
+  imports: [ArticlesModule, ConfigModule.forRoot(), DatabaseModule],
   controllers: [AppController],
   providers: [AppService],
 })

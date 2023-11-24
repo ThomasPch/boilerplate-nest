@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import Article from '../article.entity';
+import ArticleEntity from '../article.entity';
 import { UpdateArticleDto } from '../dto/update-article.dto';
 import { CreateArticleDto } from '../dto/create-article.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -8,14 +8,10 @@ import { Repository, In } from 'typeorm';
 
 @Injectable()
 export default class ArticlesService {
-
     constructor (
-        @InjectRepository(Article)
-        private articlesRepository: Repository<Article>
+        @InjectRepository(ArticleEntity)
+        private articlesRepository: Repository<ArticleEntity>
     ) { }
-
-    private lastArticleId = 0;
-    private articles: Article[] = [];
 
     getAllArticles() {
         return this.articlesRepository.find();
