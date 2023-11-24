@@ -48,4 +48,12 @@ $ npm run test
 
 # test coverage
 $ npm run test:cov
+
+# Run hot refresh
+$ npm run start:dev
+```
+
+```Docker
+# Start the containers
+$ docker-compose up
 ```
