@@ -33,8 +33,8 @@ export default class ArticlesController {
     }
 
     @Put(':id')
-    async replaceArticle(@Param('id') id: string, @Body() post: UpdateArticleDto) {
-        return this.articlesService.replaceArticle(Number(id), post);
+    async updateArticle(@Param('id') id: string, @Body() post: UpdateArticleDto) {
+        return this.articlesService.updateArticle(Number(id), post);
     }
 
     @Delete(':id')
