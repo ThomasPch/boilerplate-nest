@@ -11,6 +11,12 @@ export default class ArticlesController {
         private readonly articlesService: ArticlesService
     ) { }
 
+    @Get()
+    async getAllArticles(@Req() request: FastifyRequest, @Res() response: FastifyReply) {
+        const post = await this.articlesService.getAllArticles();
+        response.send(post);
+    }
+
     @Get(':id')
     async getArticleById(@Req() request: FastifyRequest, @Res() response: FastifyReply, @Param('id') id: string) {
         try {

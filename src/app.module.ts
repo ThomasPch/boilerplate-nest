@@ -16,10 +16,10 @@ export class AppModule implements NestModule {
     consumer
       .apply(LoggerMiddleware)
       .exclude(
-        { path: 'cats', method: RequestMethod.GET },
-        'cats/(.*)',
+        { path: 'articles', method: RequestMethod.POST },
+        'articles/(.*)',
       )
-      .forRoutes({ path: 'cats', method: RequestMethod.GET })
+      .forRoutes({ path: 'articles', method: RequestMethod.GET })
   }
 }
 

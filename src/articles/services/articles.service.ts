@@ -13,7 +13,7 @@ export default class ArticlesService {
         private articlesRepository: Repository<ArticleEntity>
     ) { }
 
-    getAllArticles() {
+    async getAllArticles() {
         return this.articlesRepository.find();
     }
 
