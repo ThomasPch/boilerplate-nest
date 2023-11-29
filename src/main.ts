@@ -1,4 +1,5 @@
 import { NestFactory } from '@nestjs/core';
+import { ValidationPipe } from '@nestjs/common';
 import {
   FastifyAdapter,
   NestFastifyApplication,
@@ -12,6 +13,7 @@ async function bootstrap() {
     // new FastifyAdapter({ logger: true, http2: true })
     new FastifyAdapter({ logger: true })
   )
+  app.useGlobalPipes(new ValidationPipe());
   app.useGlobalInterceptors(new LoggingInterceptor());
 
   // By default, Fastify listens only on the localhost 127.0.0.1 interface.
