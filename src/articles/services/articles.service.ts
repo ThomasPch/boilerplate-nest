@@ -2,11 +2,12 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Article } from '../interfaces/article.interface';
 import { UpdateArticleDto } from '../dto/update-article.dto';
 import { CreateArticleDto } from '../dto/create-article.dto';
+import { ArticleNotFoundException } from '../exceptions/articleNotFound.exception';
 
 @Injectable()
 export default class ArticlesService {
     private lastArticleId = 0;
-    private articles: Article[] = [];
+    private articles: Article[] = [{ id: 1, title: 'Article 1', content: 'Content 1' }, { id: 2, title: 'Article 2', content: 'Content 2' }];
 
     getAllArticles() {
         return this.articles;
@@ -17,7 +18,7 @@ export default class ArticlesService {
         if (article) {
             return article;
         }
-        throw new HttpException('Article not found', HttpStatus.NOT_FOUND);
+        throw new ArticleNotFoundException(id);
     }
 
     replaceArticle(id: number, article: UpdateArticleDto) {
