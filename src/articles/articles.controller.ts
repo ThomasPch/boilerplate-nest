@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Req, Res } from '@nestjs/common';
+import { FastifyRequest, FastifyReply } from 'fastify';
 import ArticlesService from './services/articles.service';
 import { UpdateArticleDto } from './dto/updateArticle.dto';
 import { CreateArticleDto } from './dto/createArticle.dto';
