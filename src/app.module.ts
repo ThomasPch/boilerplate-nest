@@ -4,11 +4,12 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { ArticlesModule } from './articles/articles.module';
+import { AuthenticationModule } from './authentication/authentication.module';
 import { ExceptionsLoggerFilter } from './common/utils/exceptionLogger.filter';
 
 
 @Module({
-  imports: [ArticlesModule],
+  imports: [ArticlesModule, AuthenticationModule],
   controllers: [AppController],
   providers: [{
     provide: APP_FILTER,
