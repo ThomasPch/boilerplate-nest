@@ -1,9 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Req, Res } from '@nestjs/common';
 import ArticlesService from './services/articles.service';
-import { UpdateArticleDto } from './dto/update-article.dto';
-import { CreateArticleDto } from './dto/create-article.dto';
-import { FastifyRequest, FastifyReply } from 'fastify';
-
+import { UpdateArticleDto } from './dto/updateArticle.dto';
+import { CreateArticleDto } from './dto/createArticle.dto';
 
 @Controller('articles')
 export default class ArticlesController {
