@@ -4,7 +4,6 @@ import {
     Controller,
     Get,
     Post,
-    UseGuards,
     UseInterceptors,
     ClassSerializerInterceptor, Inject,
 } from '@nestjs/common';
@@ -27,7 +26,7 @@ export default class SubscribersController {
 
     @Post()
     async createPost(@Body() subscriber: CreateSubscriberDto) {
-        return this.subscribersService.send({
+        return this.subscribersService.emit({
             cmd: 'add-subscriber'
         }, subscriber)
     }
