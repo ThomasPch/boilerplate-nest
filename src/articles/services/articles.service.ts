@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Article } from '../interfaces/article.interface';
 import { UpdateArticleDto } from '../dto/updateArticle.dto';
 import { CreateArticleDto } from '../dto/createArticle.dto';
+import { ArticleNotFoundException } from '../exceptions/articleNotFound.exception';
 
 @Injectable()
 export default class ArticlesService {
